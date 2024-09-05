@@ -1,0 +1,115 @@
+[gd_scene load_steps=4 format=3 uid="uid://buh3412b0qtpp"]
+
+[ext_resource type="PackedScene" uid="uid://biim2lxri0akl" path="res://example/field/field.tscn" id="1_fkhir"]
+[ext_resource type="PackedScene" uid="uid://3trgkf0u68ry" path="res://example/card/card.tscn" id="2_5f2as"]
+[ext_resource type="Texture2D" uid="uid://bswvayaw256qe" path="res://knight.jpeg" id="3_ioqqa"]
+
+[node name="Game" type="Node"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." groups=["fields"]]
+
+[node name="Field1" parent="CanvasLayer" instance=ExtResource("1_fkhir")]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.527778
+anchor_bottom = 1.0
+offset_left = -312.0
+offset_top = -175.0
+offset_right = 308.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" parent="CanvasLayer/Field1" index="1"]
+text = ""
+
+[node name="knigt" parent="CanvasLayer/Field1/CardsHolder" index="0" instance=ExtResource("2_5f2as")]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/knigt"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 150.0
+texture = ExtResource("3_ioqqa")
+expand_mode = 1
+
+[node name="knigt2" parent="CanvasLayer/Field1/CardsHolder" index="1" instance=ExtResource("2_5f2as")]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/knigt2"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 150.0
+texture = ExtResource("3_ioqqa")
+expand_mode = 1
+
+[node name="knigt3" parent="CanvasLayer/Field1/CardsHolder" index="2" instance=ExtResource("2_5f2as")]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/knigt3"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 150.0
+texture = ExtResource("3_ioqqa")
+expand_mode = 1
+
+[node name="knigt4" parent="CanvasLayer/Field1/CardsHolder" index="3" instance=ExtResource("2_5f2as")]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/knigt4"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 150.0
+texture = ExtResource("3_ioqqa")
+expand_mode = 1
+
+[node name="Card2" parent="CanvasLayer/Field1/CardsHolder" index="4" instance=ExtResource("2_5f2as")]
+layout_mode = 2
+
+[node name="Card3" parent="CanvasLayer/Field1/CardsHolder" index="5" instance=ExtResource("2_5f2as")]
+layout_mode = 2
+
+[node name="CollisionShape2D" parent="CanvasLayer/Field1/CardDropAreaRight" index="0"]
+position = Vector2(111, 78)
+
+[node name="CardDropAreaLeft" parent="CanvasLayer/Field1" index="4"]
+position = Vector2(0, 2)
+
+[node name="CollisionShape2D" parent="CanvasLayer/Field1/CardDropAreaLeft" index="0"]
+position = Vector2(108, 76)
+
+[node name="GrassyLands" parent="CanvasLayer" instance=ExtResource("1_fkhir")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 155.0
+offset_top = -402.0
+offset_right = 576.0
+offset_bottom = -252.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Tundra" parent="CanvasLayer" instance=ExtResource("1_fkhir")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -567.0
+offset_top = -406.0
+offset_right = -146.0
+offset_bottom = -256.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[editable path="CanvasLayer/Field1"]
