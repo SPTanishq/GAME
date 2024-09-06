@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://buh3412b0qtpp"]
+[gd_scene load_steps=5 format=3 uid="uid://buh3412b0qtpp"]
 
 [ext_resource type="PackedScene" uid="uid://biim2lxri0akl" path="res://example/field/field.tscn" id="1_fkhir"]
+[ext_resource type="Script" path="res://example/example.gd" id="1_msmp0"]
 [ext_resource type="PackedScene" uid="uid://3trgkf0u68ry" path="res://example/card/card.tscn" id="2_5f2as"]
 [ext_resource type="Texture2D" uid="uid://bswvayaw256qe" path="res://knight.jpeg" id="3_ioqqa"]
 
 [node name="Game" type="Node"]
+script = ExtResource("1_msmp0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." groups=["fields"]]
 
@@ -27,13 +29,6 @@ text = ""
 texture_filter = 1
 texture_repeat = 1
 layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/knigt"]
-layout_mode = 0
-offset_right = 100.0
-offset_bottom = 150.0
-texture = ExtResource("3_ioqqa")
-expand_mode = 1
 
 [node name="knigt2" parent="CanvasLayer/Field1/CardsHolder" index="1" instance=ExtResource("2_5f2as")]
 texture_filter = 1

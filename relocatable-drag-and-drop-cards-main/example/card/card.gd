@@ -10,6 +10,7 @@ extends Control
 @onready var card_detector: Area2D = $CardsDetector
 @onready var home_field: Field
 
+var card 
 
 var index: int = 0
 

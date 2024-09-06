@@ -1,7 +1,6 @@
 class_name Field
 extends MarginContainer
 
-
 @onready var card_drop_area_right: Area2D = $CardDropAreaRight
 @onready var card_drop_area_left: Area2D = $CardDropAreaLeft
 @onready var cards_holder: HBoxContainer = $CardsHolder
@@ -21,8 +20,8 @@ func return_card_starting_position(card: Card):
 
 
 func set_new_card(card: Card):
-	card_reposition(card)
-	card.home_field = self
+		card_reposition(card)
+		card.home_field = self
 
 
 func card_reposition(card: Card):

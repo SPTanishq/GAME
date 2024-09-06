@@ -40,7 +40,7 @@ func on_mouse_exited():
 		current_state.on_mouse_exited()
 
 
-func on_child_transition(new_state_name):
+func on_child_transition(new_state_name): #connected to transioned signal
 	var new_state: CardState = states.get(new_state_name.to_lower())
 	if !new_state:
 		prints(current_state, "transition to no state")
