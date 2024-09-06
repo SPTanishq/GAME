@@ -1,7 +1,8 @@
 extends Node
 
-var itemData = {}
+signal cardMoved
 
+var itemData = {}
 @export_file var dataFilePath = "res://Data/CardData.json"
 @export var MAX_CARDS: int = 3
 
@@ -23,3 +24,6 @@ func Load_json_file(filePath: String):
 		
 	else:
 		print("json file doesn't exist")
+
+func _on_card_moved(card):
+	cardMoved.emit(card)

@@ -1,10 +1,15 @@
 class_name Field
 extends MarginContainer
 
+signal cardMoved
+
 @onready var card_drop_area_right: Area2D = $CardDropAreaRight
 @onready var card_drop_area_left: Area2D = $CardDropAreaLeft
 @onready var cards_holder: HBoxContainer = $CardsHolder
+var power = 0
 var HF = false
+
+var cardList = {}
 
 func _ready():
 	$Label.text = name
@@ -22,10 +27,21 @@ func return_card_starting_position(card: Card):
 	cards_holder.move_child(card, card.index)
 
 
-func set_new_card(card: Card):
+func set_new_card(card):
+		cardMoved.emit(card)
 		card_reposition(card)
 		card.home_field = self
+		if !HF:
+			power += Global.itemData[card.type]["p"]
+			cardList[card.type] = card
+		else:
+			power = 0
 
+func _on_card_moved(card):
+	if card.home_field == self:
+		print(str(card.home_field) + " " + str(self))
+		power -= Global.itemData[card.type]["p"]
+		cardList.erase(card.type)
 
 func card_reposition(card: Card):
 	var field_areas = card.drop_point_detector.get_overlapping_areas()
@@ -50,3 +66,7 @@ func card_reposition(card: Card):
 
 	card.reparent(cards_holder)
 	cards_holder.move_child(card, index)
+
+#Debug can delete
+func _on_timer_timeout():
+	print(str(power) + " " + str(name))

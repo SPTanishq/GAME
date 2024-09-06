@@ -38,3 +38,9 @@ monitoring = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CardDropAreaLeft"]
 position = Vector2(106, 74)
 shape = SubResource("RectangleShape2D_crh71")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.5
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

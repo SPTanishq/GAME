@@ -9,13 +9,20 @@ extends Control
 @onready var drop_point_detector: Area2D = $DropPointDetector
 @onready var card_detector: Area2D = $CardsDetector
 @onready var home_field: Field
-
-var card 
-
+@onready var type = []
+var typeIndex = 0
 var index: int = 0
 
-
 func _ready():
+	type = Global.itemData["cards"]
+	var parent = get_parent()
+	if parent:
+		# Manually find the index of this card within the parent because the get_child_index() function no workey
+		for i in range(parent.get_child_count()):
+			if parent.get_child(i) == self:
+				typeIndex = i
+				break
+	type = type[typeIndex]
 	name_label.text = name
 
 
