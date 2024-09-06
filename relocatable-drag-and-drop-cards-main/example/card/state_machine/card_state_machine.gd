@@ -12,11 +12,6 @@ func _ready():
 		if child is CardState:
 			states[child.name.to_lower()] = child
 			child.transitioned.connect(on_child_transition)
-			
-			if child.get_children():
-				for sub_child in child.get_children():
-					states[child.name.to_lower() + '/' + sub_child.name.to_lower()] = sub_child
-					sub_child.transitioned.connect(on_child_transition)
 
 	print(states)
 	
