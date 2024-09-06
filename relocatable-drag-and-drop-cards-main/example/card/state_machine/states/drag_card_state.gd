@@ -13,12 +13,9 @@ func _enter():
 
 
 func on_input(event: InputEvent):
-	var mouse_motion := event is InputEventMouseMotion
-	var confirm = event.is_action_released("mouse_left")
-	
-	if mouse_motion:
+	if event is InputEventMouseMotion:
 		card.global_position = card.get_global_mouse_position() - card.pivot_offset
 	
-	if confirm:
+	if event.is_action_released("mouse_left"):
 		get_viewport().set_input_as_handled()
 		transitioned.emit("Release")

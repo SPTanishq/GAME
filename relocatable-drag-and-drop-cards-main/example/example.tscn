@@ -25,52 +25,71 @@ grow_vertical = 0
 [node name="Label" parent="CanvasLayer/Field1" index="1"]
 text = ""
 
-[node name="knigt" parent="CanvasLayer/Field1/CardsHolder" index="0" instance=ExtResource("2_5f2as")]
-texture_filter = 1
-texture_repeat = 1
+[node name="Kaboom" parent="CanvasLayer/Field1/CardsHolder" index="0" instance=ExtResource("2_5f2as")]
 layout_mode = 2
 
-[node name="knigt2" parent="CanvasLayer/Field1/CardsHolder" index="1" instance=ExtResource("2_5f2as")]
-texture_filter = 1
-texture_repeat = 1
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/Kaboom"]
 layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/knigt2"]
-layout_mode = 0
-offset_right = 100.0
+offset_left = -4.0
+offset_right = -4.0
 offset_bottom = 150.0
 texture = ExtResource("3_ioqqa")
 expand_mode = 1
 
-[node name="knigt3" parent="CanvasLayer/Field1/CardsHolder" index="2" instance=ExtResource("2_5f2as")]
-texture_filter = 1
-texture_repeat = 1
+[node name="bunker" parent="CanvasLayer/Field1/CardsHolder" index="1" instance=ExtResource("2_5f2as")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/knigt3"]
-layout_mode = 0
-offset_right = 100.0
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/bunker"]
+layout_mode = 2
+offset_left = -4.0
+offset_right = -4.0
 offset_bottom = 150.0
 texture = ExtResource("3_ioqqa")
 expand_mode = 1
 
-[node name="knigt4" parent="CanvasLayer/Field1/CardsHolder" index="3" instance=ExtResource("2_5f2as")]
-texture_filter = 1
-texture_repeat = 1
+[node name="sniper" parent="CanvasLayer/Field1/CardsHolder" index="2" instance=ExtResource("2_5f2as")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/knigt4"]
-layout_mode = 0
-offset_right = 100.0
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/sniper"]
+layout_mode = 2
+offset_left = -4.0
+offset_right = -4.0
 offset_bottom = 150.0
 texture = ExtResource("3_ioqqa")
 expand_mode = 1
 
-[node name="Card2" parent="CanvasLayer/Field1/CardsHolder" index="4" instance=ExtResource("2_5f2as")]
+[node name="resupply" parent="CanvasLayer/Field1/CardsHolder" index="3" instance=ExtResource("2_5f2as")]
 layout_mode = 2
 
-[node name="Card3" parent="CanvasLayer/Field1/CardsHolder" index="5" instance=ExtResource("2_5f2as")]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/resupply"]
 layout_mode = 2
+offset_left = -4.0
+offset_right = -4.0
+offset_bottom = 150.0
+texture = ExtResource("3_ioqqa")
+expand_mode = 1
+
+[node name="copycat" parent="CanvasLayer/Field1/CardsHolder" index="4" instance=ExtResource("2_5f2as")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/copycat"]
+layout_mode = 2
+offset_left = -4.0
+offset_right = -4.0
+offset_bottom = 150.0
+texture = ExtResource("3_ioqqa")
+expand_mode = 1
+
+[node name="overcharge" parent="CanvasLayer/Field1/CardsHolder" index="5" instance=ExtResource("2_5f2as")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Field1/CardsHolder/overcharge"]
+layout_mode = 2
+offset_left = -4.0
+offset_right = -4.0
+offset_bottom = 150.0
+texture = ExtResource("3_ioqqa")
+expand_mode = 1
 
 [node name="CollisionShape2D" parent="CanvasLayer/Field1/CardDropAreaRight" index="0"]
 position = Vector2(111, 78)
