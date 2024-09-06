@@ -1,12 +1,12 @@
 [gd_scene load_steps=5 format=3 uid="uid://buh3412b0qtpp"]
 
 [ext_resource type="PackedScene" uid="uid://biim2lxri0akl" path="res://example/field/field.tscn" id="1_fkhir"]
-[ext_resource type="Script" path="res://example/example.gd" id="1_msmp0"]
+[ext_resource type="Script" path="res://example/Global.gd" id="1_nlghr"]
 [ext_resource type="PackedScene" uid="uid://3trgkf0u68ry" path="res://example/card/card.tscn" id="2_5f2as"]
 [ext_resource type="Texture2D" uid="uid://bswvayaw256qe" path="res://knight.jpeg" id="3_ioqqa"]
 
 [node name="Game" type="Node"]
-script = ExtResource("1_msmp0")
+script = ExtResource("1_nlghr")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." groups=["fields"]]
 

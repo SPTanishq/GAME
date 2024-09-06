@@ -4,10 +4,13 @@ extends MarginContainer
 @onready var card_drop_area_right: Area2D = $CardDropAreaRight
 @onready var card_drop_area_left: Area2D = $CardDropAreaLeft
 @onready var cards_holder: HBoxContainer = $CardsHolder
-
+var HF = false
 
 func _ready():
 	$Label.text = name
+	
+	if cards_holder.get_child_count() > Global.MAX_CARDS:
+		HF = true
 	
 	for child in cards_holder.get_children():
 		var card := child as Card

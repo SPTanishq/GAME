@@ -1,7 +1,5 @@
 extends CardState
 
-@export var MAX_CARDS: int = 3
-
 func _enter():
 	card.color_rect.color = Color.DARK_VIOLET
 	card.label.text = "Release"
@@ -16,12 +14,9 @@ func _enter():
 	else:
 		var new_field: Field = field_areas[0].get_parent()
 		
-		# Check if the new field is at its maximum capacity
-		if new_field.cards_holder.get_children().size() >= MAX_CARDS:
-			# Return the card to its home field if the limit is reached
+		if not new_field.HF && new_field.cards_holder.get_children().size() >= Global.MAX_CARDS:
 			card.home_field.return_card_starting_position(card)
 		else:
-			# Otherwise, set the new card in the new field
 			new_field.set_new_card(card)
 
 	transitioned.emit("idle")
