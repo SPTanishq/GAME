@@ -33,13 +33,14 @@ func set_new_card(card):
 		card.home_field = self
 		if !HF:
 			power += Global.itemData[card.type]["p"]
+			Global.energy -= Global.itemData[card.type]["e"]
 			cardList[card.type] = card
 		else:
 			power = 0
+			Global.energy += Global.itemData[card.type]["p"]
 
 func _on_card_moved(card):
 	if card.home_field == self:
-		print(str(card.home_field) + " " + str(self))
 		power -= Global.itemData[card.type]["p"]
 		cardList.erase(card.type)
 
@@ -69,4 +70,6 @@ func card_reposition(card: Card):
 
 #Debug can delete
 func _on_timer_timeout():
-	print(str(power) + " " + str(name))
+	print(str(power) + "-Power " + str(name))
+	print("CT" + str(Global.currentTurn))
+	print("Energy" + str(Global.energy))

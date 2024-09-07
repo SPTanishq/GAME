@@ -7,5 +7,8 @@ func _enter():
 
 
 func on_input(event):
-	if event is InputEventMouseMotion:
-		transitioned.emit("Drag")
+	if Global.currentTurn:
+		if event is InputEventMouseMotion:
+			transitioned.emit("Drag")
+	else:
+		transitioned.emit("Hover")

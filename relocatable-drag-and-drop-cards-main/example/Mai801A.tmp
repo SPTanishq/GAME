@@ -126,14 +126,6 @@ offset_bottom = -256.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Button" type="Button" parent="CanvasLayer"]
-offset_left = 973.0
-offset_top = 530.0
-offset_right = 1086.0
-offset_bottom = 573.0
-toggle_mode = true
-text = "End Turn"
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
@@ -144,7 +136,5 @@ autostart = true
 [connection signal="cardMoved" from="CanvasLayer/Home_Field" to="." method="_on_card_moved"]
 [connection signal="cardMoved" from="CanvasLayer/GrassyLands" to="." method="_on_card_moved"]
 [connection signal="cardMoved" from="CanvasLayer/Tundra" to="." method="_on_card_moved"]
-[connection signal="button_down" from="CanvasLayer/Button" to="." method="_on_button_button_down"]
-[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
 
 [editable path="CanvasLayer/Home_Field"]
