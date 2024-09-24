@@ -2,14 +2,13 @@ class_name Field
 extends MarginContainer
 
 signal cardMoved
-signal power_changed
 
 @onready var card_drop_area_right: Area2D = $CardDropAreaRight
 @onready var card_drop_area_left: Area2D = $CardDropAreaLeft
 @onready var cards_holder: HBoxContainer = $CardsHolder
 var power = 0
-var HF = false
 
+var HF = false
 var cardList = {}
 
 func _ready():
@@ -17,7 +16,6 @@ func _ready():
 	
 	if cards_holder.get_child_count() > Global.MAX_CARDS:
 		HF = true
-		power = 21
 	
 	for child in cards_holder.get_children():
 		var card := child as Card
@@ -33,19 +31,19 @@ func set_new_card(card):
 		cardMoved.emit(card)
 		card_reposition(card)
 		card.home_field = self
-		if !HF:
-			power += Global.itemData[card.type]["p"]
-			power_changed.emit(power)
-		else:
-			Global.energy += Global.itemData[card.type]["e"]
+		if HF:
+			Global.Player_energy += Global.itemData[card.type]["e"]
 			cardList[card.type] = card
+		else:
+			Global.location_data[name]["player_power"] += Global.itemData[card.type]["p"]
 
 func _on_card_moved(card):
 	if card.home_field == self:
+		print(str(card.home_field))
 		if HF:
-			Global.energy -= Global.itemData[card.type]["e"]
-		power -= Global.itemData[card.type]["p"]
-		power_changed.emit(power)
+			Global.Player_energy -= Global.itemData[card.type]["e"]
+		else:
+			Global.location_data[name]["player_power"] -= Global.itemData[card.type]["p"]
 		cardList.erase(card.type)
 
 func card_reposition(card: Card):
@@ -72,6 +70,5 @@ func card_reposition(card: Card):
 	card.reparent(cards_holder)
 	cards_holder.move_child(card, index)
 
-#Debug can delete
-func _on_timer_timeout():
+func card_ablity():
 	pass

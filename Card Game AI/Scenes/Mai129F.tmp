@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://buh3412b0qtpp"]
+[gd_scene load_steps=11 format=3 uid="uid://buh3412b0qtpp"]
 
 [ext_resource type="Script" path="res://Scripts/Global.gd" id="1_h5yhy"]
 [ext_resource type="PackedScene" uid="uid://biim2lxri0akl" path="res://Scenes/field.tscn" id="2_a4ase"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://Scripts/TUNDRA_POWER.gd" id="5_va6km"]
 [ext_resource type="Script" path="res://Scripts/GL_POWER.gd" id="6_rp7ke"]
 [ext_resource type="Script" path="res://Scripts/Energy.gd" id="7_mj1i7"]
+[ext_resource type="Script" path="res://Scripts/Turn.gd" id="8_41x6e"]
+[ext_resource type="Script" path="res://Scenes/BC.gd" id="9_v6vqj"]
 [ext_resource type="Script" path="res://Scripts/AI.gd" id="9_xpmyd"]
 
 [node name="Game" type="Node"]
@@ -174,12 +176,14 @@ text = "Turn: 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 justification_flags = 162
+script = ExtResource("8_41x6e")
 
 [node name="BC" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("9_v6vqj")
 
 [node name="END" type="Button" parent="CanvasLayer/BC"]
 layout_mode = 0
@@ -205,7 +209,9 @@ autostart = true
 [connection signal="cardMoved" from="CanvasLayer/Home_Field" to="." method="_on_card_moved"]
 [connection signal="cardMoved" from="CanvasLayer/gl" to="." method="_on_card_moved"]
 [connection signal="cardMoved" from="CanvasLayer/tundra" to="." method="_on_card_moved"]
-[connection signal="toggled" from="CanvasLayer/BC/END" to="." method="_on_end_toggled"]
+[connection signal="power_changed" from="CanvasLayer/tundra" to="CanvasLayer/TUNDRA_POWER" method="_on_tundra_power_changed"]
+[connection signal="endturn" from="CanvasLayer/BC" to="." method="_on_bc_endturn"]
+[connection signal="toggled" from="CanvasLayer/BC/END" to="CanvasLayer/BC" method="_on_end_toggled"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 
 [editable path="CanvasLayer/Home_Field"]

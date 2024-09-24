@@ -1,34 +1,41 @@
 {
-  "cards": [
+"cards": [
 	"kaboom",
 	"bunker",
 	"sniper",
 	"resupply",
 	"copycat",
 	"overcharge"
-  ],
-  "kaboom": {
+	],
+"kaboom": {
+	"p": 0,
+	"e": 5,
+	"h": 90
+	},
+"bunker": {
 	"p": 1,
-	"e": 6
-  },
-  "bunker": {
+	"e": 2,
+	"h": 30
+	},
+"sniper": {
 	"p": 2,
-	"e": 5
-  },
-  "sniper": {
-	"p": 3,
-	"e": 4
-  },
-  "resupply": {
-	"p": 4,
-	"e": 3
-  },
-  "copycat": {
+	"e": 1,
+	"h": 40
+	},
+"resupply": {
 	"p": 5,
-	"e": 2
-  },
-  "overcharge": {
-	"p": 6,
-	"e": 1
-  }
+	"e": 4,
+	"h": 60
+	},
+"copycat": {
+	"p": 3,
+	"e": 3,
+	"h": 100
+	},
+"overcharge": {
+	"p": 0,
+	"e": 4,
+	"h": 80
+	}
 }
+

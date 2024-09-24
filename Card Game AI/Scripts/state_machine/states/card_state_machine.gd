@@ -48,9 +48,5 @@ func on_child_transition(new_state_name): #connected to transioned signal
 	
 	if current_state:
 		current_state._exit()
-		
 	new_state.call_deferred("_enter")
-	
 	current_state = new_state
-	
-	prints(get_parent() ,"current state", current_state)

@@ -1,4 +1,4 @@
 extends Label
 
-func _on_grassy_lands_power_changed(power):
-	self.text = "Power: " + str(power)
+func _process(delta):
+	self.text = str(Global.location_data["gl"]["player_power"])

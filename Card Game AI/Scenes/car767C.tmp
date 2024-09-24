@@ -1,0 +1,284 @@
+[gd_scene load_steps=9 format=3 uid="uid://3trgkf0u68ry"]
+
+[sub_resource type="GDScript" id="GDScript_134ew"]
+script/source = "class_name Card
+extends Control
+
+@export var card_texture:Texture
+@onready var color_rect: ColorRect = $ColorRect
+@onready var label: Label = $Label
+@onready var name_label: Label = %NameLabel
+@onready var state_machine: CardStateMachine = $CardStateMachine
+@onready var drop_point_detector: Area2D = $DropPointDetector
+@onready var card_detector: Area2D = $CardsDetector
+@onready var home_field: Field
+@onready var type = []
+var typeIndex = 0
+var index: int = 0
+
+func _ready():
+	type = Global.itemData[\"cards\"]
+	var parent = get_parent()
+	if parent:
+		# Manually find the index of this card within the parent because the get_child_index() function no workey
+		for i in range(parent.get_child_count()):
+			if parent.get_child(i) == self:
+				typeIndex = i
+				break
+	type = type[typeIndex]
+	name_label.text = name
+
+
+func _input(event):
+	state_machine.on_input(event)
+
+
+func _on_gui_input(event):
+	state_machine.on_gui_input(event)
+	
+
+func _on_mouse_entered():
+	state_machine.on_mouse_entered()
+
+
+func _on_mouse_exited():
+	state_machine.on_mouse_exited()
+"
+
+[sub_resource type="GDScript" id="GDScript_umi8o"]
+script/source = "class_name CardStateMachine
+extends Node
+
+@export var initial_state: CardState
+
+var current_state: CardState
+var states: Dictionary = {}
+
+
+func _ready():
+	for child in get_children():
+		if child is CardState:
+			states[child.name.to_lower()] = child
+			child.transitioned.connect(on_child_transition)
+
+	print(states)
+	
+	if initial_state:
+		initial_state.call_deferred(\"_enter\")
+		current_state = initial_state
+
+
+func on_input(event: InputEvent):
+	if current_state:
+		current_state.on_input(event)
+
+
+func on_gui_input(event: InputEvent):
+	if current_state:
+		current_state.on_gui_input(event)
+
+
+func on_mouse_entered():
+	if current_state:
+		current_state.on_mouse_entered()
+
+
+func on_mouse_exited():
+	if current_state:
+		current_state.on_mouse_exited()
+
+
+func on_child_transition(new_state_name): #connected to transioned signal
+	var new_state: CardState = states.get(new_state_name.to_lower())
+	if !new_state:
+		return
+	
+	if current_state:
+		current_state._exit()
+		
+	new_state.call_deferred(\"_enter\")
+	
+	current_state = new_state
+"
+
+[sub_resource type="GDScript" id="GDScript_re2ub"]
+script/source = "extends CardState
+
+
+func _enter():
+	card.color_rect.color = Color.WEB_GREEN
+	card.label.text = \"Idle\"
+	card.pivot_offset = Vector2.ZERO
+
+
+func on_mouse_entered():
+	transitioned.emit(\"hover\")
+"
+
+[sub_resource type="GDScript" id="GDScript_5g0uf"]
+script/source = "extends CardState
+
+
+func _enter():
+	card.color_rect.color = Color.ORANGE
+	card.label.text = \"CLICKED\"
+
+
+func on_input(event):
+	if event is InputEventMouseMotion:
+		transitioned.emit(\"Drag\")
+"
+
+[sub_resource type="GDScript" id="GDScript_nw0fh"]
+script/source = "extends CardState
+
+
+func _enter():
+	card.color_rect.color = Color.BLUE
+	card.label.text = \"DRAG\"
+	
+	card.index = card.get_index()
+	
+	var canvas_layer := get_tree().get_first_node_in_group(\"fields\")
+	if canvas_layer:
+		card.reparent(canvas_layer)
+
+
+func on_input(event: InputEvent):
+	if event is InputEventMouseMotion:
+		card.global_position = card.get_global_mouse_position() - card.pivot_offset
+	
+	if event.is_action_released(\"mouse_left\"):
+		transitioned.emit(\"Release\")
+"
+
+[sub_resource type="GDScript" id="GDScript_btoii"]
+script/source = "extends CardState
+
+func _enter():
+	card.color_rect.color = Color.DARK_VIOLET
+	card.label.text = \"Release\"
+
+	#When a card is released, it checks where it is at the time of release.
+	var field_areas = card.drop_point_detector.get_overlapping_areas()
+
+	if field_areas.is_empty():
+		card.home_field.return_card_starting_position(card)
+	elif field_areas[0].get_parent() == card.home_field:
+		card.home_field.card_reposition(card)
+	else:
+		var new_field: Field = field_areas[0].get_parent()
+		
+		if not new_field.HF && new_field.cards_holder.get_children().size() >= Global.MAX_CARDS:
+			card.home_field.return_card_starting_position(card)
+		else:
+			new_field.set_new_card(card)
+
+	transitioned.emit(\"idle\")
+"
+
+[sub_resource type="GDScript" id="GDScript_pe8ex"]
+script/source = "extends CardState
+
+
+func _enter():
+	card.color_rect.color = Color.DARK_ORCHID
+	card.label.text = \"HOVER\"
+
+
+func on_gui_input(event: InputEvent):
+	if event.is_action_pressed(\"mouse_left\"):
+		card.pivot_offset = card.get_global_mouse_position() - card.global_position
+		transitioned.emit(\"Click\")
+
+
+func on_mouse_exited():
+	transitioned.emit(\"Idle\")
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gwet6"]
+size = Vector2(100, 150)
+
+[node name="Card" type="Control"]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+script = SubResource("GDScript_134ew")
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 1)
+
+[node name="NameLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 10.5
+offset_right = 57.5
+offset_bottom = 23.0
+text = "Name"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "State"
+
+[node name="CardStateMachine" type="Node" parent="."]
+script = SubResource("GDScript_umi8o")
+
+[node name="Idle" type="Node" parent="CardStateMachine" node_paths=PackedStringArray("card")]
+script = SubResource("GDScript_re2ub")
+card = NodePath("../..")
+
+[node name="Click" type="Node" parent="CardStateMachine" node_paths=PackedStringArray("card")]
+script = SubResource("GDScript_5g0uf")
+card = NodePath("../..")
+
+[node name="Drag" type="Node" parent="CardStateMachine" node_paths=PackedStringArray("card")]
+script = SubResource("GDScript_nw0fh")
+card = NodePath("../..")
+
+[node name="Release" type="Node" parent="CardStateMachine" node_paths=PackedStringArray("card")]
+script = SubResource("GDScript_btoii")
+card = NodePath("../..")
+
+[node name="Hover" type="Node" parent="CardStateMachine" node_paths=PackedStringArray("card")]
+script = SubResource("GDScript_pe8ex")
+card = NodePath("../..")
+
+[node name="DropPointDetector" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropPointDetector"]
+position = Vector2(50, 75)
+shape = SubResource("RectangleShape2D_gwet6")
+
+[node name="CardsDetector" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CardsDetector"]
+position = Vector2(50, 75)
+shape = SubResource("RectangleShape2D_gwet6")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
